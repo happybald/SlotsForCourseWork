@@ -15,7 +15,7 @@
                 <li><a href="" id="logoutbtn">Logout</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="#" id="logoutbtn">Logout</a></li>
+                <li><a href="" id="logoutbtn">Logout</a></li>
             </ul>
         }
         else
@@ -36,7 +36,7 @@
 <div id="modal1" class="modal">
     <div class="modal-content">
         <h2>Login</h2>
-        <form id="#loginFormActive" class="col s12">
+        <form id="loginFormActive" class="col s12">
             <div class="row">
                 <div class="input-field col s8">
                     <i class="material-icons prefix">account_circle</i>
@@ -62,7 +62,7 @@
                     <div id="result_Loginform"></div>
                 </div>
             </div>
-            <input type="button" class="btn" id="loginbtn" value="Login" />
+            <input type="submit" class="btn" id="loginbtn" value="Login" />
         </form>
     </div>
     <div class="modal-footer">
@@ -73,7 +73,7 @@
 <div id="modal2" class="modal">
     <div class="modal-content">
         <h2>Register User</h2>
-        <form id="#registerForm" class="col s12">
+        <form id="registerForm" class="col s12">
             <div class="row">
                 <div class="input-field col s6">
                     <i class="material-icons prefix">account_circle</i>
@@ -100,7 +100,7 @@
             </div>
             <div class="row">
                 <div class="col s6">
-                    <input type="button" class="btn" id="registerbtn" value="Register" />
+                    <input type="submit" class="btn" id="registerbtn" value="Register" />
                 </div>
                 <div class="col s6 offset-s6">
                     <div id="result_RegisterForm"></div>
@@ -128,14 +128,34 @@
         <div class="col s6 ">
             <h2>
                 Credits
-                <span id="chip" class="chip">
-                </span>
-            </h2> <br>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    var user = await this.UserManager.GetUserAsync(User);
+                    <span id="chip" class="chip" value>
+                    @user.Credits
+                    </span>
+                }
+                else{
+                    <span id="chip" class="chip" value>
+                100
+                    </span>
+                }
+</h2> <br>
             <h2>
                 Best Score
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        var user = await this.UserManager.GetUserAsync(User);
                 <span id="highScore" class="chip" value>
-                    0
+                        @user.BestScore
                 </span>
+                    }
+                    else
+                    {
+            <span id="highScore" class="chip" value>
+            0
+            </span>   
+                    }
             </h2> <br>
             <h2>Gains</h2>
             <br>
@@ -161,8 +181,8 @@
             </table> <br>
 
 
-            <h2>Bet</h2>
-            <input type="number" min="1" name="bet" id="bet" value="1">
+            <h2>Bet (max 10,000)</h2>
+            <input type="number" min="1" max="10000" name="bet" id="bet" value="1" maxlength="8" size="8" >
             <br><br>
 
         </div>
@@ -176,25 +196,6 @@
     </div>
     <button id="control" class="but btn blue">Spin</button>
     <button id="save" class="but btn blue" data-target="saveScore">Save</button>
-    <div id="LoginForm" class="modal modal-fixed-footer">
-        <div class="modal-content">
-            <h4>Login Form</h4>
-            <form method="post" id="ajax_form_Login">
-                <label for="userName">UserName:</label><br>
-                <input type="text" id="userName" name="userName"><br>
-                <label for="pass">Password:</label><br>
-                <input type="password" id="pass" name="pass">
-                <label for="cpass">Confirm Password:</label><br>
-                <input type="password" id="cpass" name="cpass">
-                <label for="rememberMe">Remember me?</label>
-                <input type="checkbox" id="rememberMe">
-                <input type="button" id="WithdrawButton" value="Login" />
-            </form>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-        </div>
-    </div>
 
 </div>
 <div id="options">
@@ -203,8 +204,8 @@
     <br>
 </div>
 
-<div id="bestScores" class="scores">
-    <table id="TableBS" class="responsive-table">
+<div id="bestScores" class="scores" style="height:400px">
+    <table id="TableBS">
         <thead>
             <tr>
                 <th>#</th>
@@ -218,7 +219,7 @@
 
 </div>
 <div id="lastSpins">
-    <table class="striped">
+    <table class="">
         <thead>
             <tr>
                 <th></th>

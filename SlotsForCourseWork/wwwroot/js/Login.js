@@ -1,22 +1,20 @@
 ﻿$(document).ready(function () {
-    $("#loginbtn").click(
+    $("#loginFormActive").on('submit',
         function () {
             $('#result_Loginform').html('');
             $('#loginbtn').addClass("disabled");
             if ($('#UserNameL').val() == "" || $('#PasswordL').val() == "") {
-                console.log(true);
                 setTimeout(function () {
                     $('#loginbtn').removeClass('disabled');
                 }, 8000);
                 $('#result_Loginform').html('Fill all fields!');
-                return;
+                return false;
             }
             sendAjaxLogin('/Account/Login')
             return false;
         });
 });
 function sendAjaxLogin(url) {
-    console.log("send block");
     var rememberbool;
     if (($('#rememberMeL').val().localeCompare("On"))) {
         rememberbool = true;
@@ -31,7 +29,6 @@ function sendAjaxLogin(url) {
         ReturnUrl: "null",
     }
     console.log($("[name='__RequestVerificationToken']").val());
-    console.log(Result);
     $.ajax({
         url: url, //url страницы 
         type: "POST", //метод отправки
@@ -49,7 +46,7 @@ function sendAjaxLogin(url) {
             } else {
                 Materialize.toast(response.statusMessage, 4000) // 4000 is the duration of the toast
                 $('#result_Loginform').html(response.statusMessage);
-                location.reload();
+                setTimeout(function () { location.reload() }, 1000);
             }
         },
         error: function (response) { // Данные не отправлены

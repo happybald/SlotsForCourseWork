@@ -10,8 +10,6 @@ C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\obj\Deb
 C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\obj\Debug\netcoreapp3.1\SlotsForCourseWork.TagHelpers.input.cache
 C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\obj\Debug\netcoreapp3.1\SlotsForCourseWork.TagHelpers.output.cache
 C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\obj\Debug\netcoreapp3.1\SlotsForCourseWork.RazorCoreGenerate.cache
-C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
-C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs

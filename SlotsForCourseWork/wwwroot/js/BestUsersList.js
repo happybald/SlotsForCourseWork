@@ -14,7 +14,6 @@
                         "</tr>";
                     $('#TableBS').append(rows);
                 }); //End of foreach Loop   
-                console.log(data);
             }, //End of AJAX Success function  
 
             failure: function (data) {

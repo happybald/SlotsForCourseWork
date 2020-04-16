@@ -1,23 +1,22 @@
 ﻿$(document).ready(function () {
-    $("#registerbtn").click(
+    $("#registerForm").on('submit',
         function () {
             $('#result_RegisterForm').html('');
             $('#registerbtn').addClass("disabled");
-            if ($('#UserNameR').val() == "" || $('#PasswordR').val() == "" || $('#EmailR').val() == "" || $('#ConfirmPasswordR').val() == "") {
-                setTimeout(function () {
-                    $('#registerbtn').removeClass('disabled');
-                }, 8000);
-                $('#result_RegisterForm').html('Fill all fields!');
-                return;
-            }
-            console.log($('#EmailR').val().indexOf("@"));
-            if ($('#EmailR').val().indexOf("@") != -1) {
-                setTimeout(function () {
-                    $('#registerbtn').removeClass('disabled');
-                }, 8000);
-                $('#result_RegisterForm').html('Enter correct email!');
-                return;
-            }
+            //if ($('#UserNameR').val() == "" || $('#PasswordR').val() == "" || $('#EmailR').val() == "" || $('#ConfirmPasswordR').val() == "") {
+            //    setTimeout(function () {
+            //        $('#registerbtn').removeClass('disabled');
+            //    }, 8000);
+            //    $('#result_RegisterForm').html('Fill all fields!');
+            //    return false;
+            //}
+            //if ($('#EmailR').val().indexOf("@") != -1) {
+            //    setTimeout(function () {
+            //        $('#registerbtn').removeClass('disabled');
+            //    }, 8000);
+            //    $('#result_RegisterForm').html('Enter correct email!');
+            //    return false;
+            //}
             sendAjaxRegister('/Account/Register')
             return false;
         });
@@ -29,8 +28,6 @@ function sendAjaxRegister(url) {
         Password: "" + $('#PasswordR').val() + "",
         PasswordConfirm: "" + $('#ConfirmPasswordR').val() + "",
     }
-    console.log($("[name='__RequestVerificationToken']").val());
-    console.log(Result);
     $.ajax({
         url: url, //url страницы 
         type: "POST", //метод отправки
@@ -50,7 +47,7 @@ function sendAjaxRegister(url) {
             } else {
                 Materialize.toast(response.statusMessage, 4000) // 4000 is the duration of the toast
                 $('#result_RegisterForm').html(response.statusMessage);
-                location.reload();
+                setTimeout(function () { location.reload() }, 1000);
             }
         },
         error: function (response) { // Данные не отправлены
