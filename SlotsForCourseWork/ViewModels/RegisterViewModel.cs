@@ -22,6 +22,9 @@ namespace SlotsForCourseWork.ViewModels
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Display(Name = "Referral UserName")]
+        public string RefUserName { get; set; }
+
         [Required]
         [Compare("Password", ErrorMessage = "Password mismatch")]
         [DataType(DataType.Password)]

@@ -27,6 +27,7 @@ function sendAjaxRegister(url) {
         Email: "" + $('#EmailR').val() + "",
         Password: "" + $('#PasswordR').val() + "",
         PasswordConfirm: "" + $('#ConfirmPasswordR').val() + "",
+        RefUserName: $('#ReferralUserNamew').val()
     }
     $.ajax({
         url: url, //url страницы 

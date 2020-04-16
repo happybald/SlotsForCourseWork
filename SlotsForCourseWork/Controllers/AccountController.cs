@@ -42,8 +42,17 @@ namespace CustomIdentityApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.UserName, Credits = 20, BestScore=0 };
-                // добавляем пользователя
+                User user = new User { Email = model.Email, UserName = model.UserName, Credits = 20, BestScore=0, RefUserName=model.RefUserName};
+                if(user.UserName == user.RefUserName)
+                { 
+                    return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Referral user incorrect!", false) });
+                }
+                var refuser = this._context.Users.FirstOrDefault(u => u.UserName == model.RefUserName);
+                if(refuser == null)
+                {
+                    return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Referral user does not exist!", false) });
+                }
+                // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -75,8 +84,7 @@ namespace CustomIdentityApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result =
-                    await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     // проверяем, принадлежит ли URL приложению
@@ -86,7 +94,7 @@ namespace CustomIdentityApp.Controllers
                     }
                     else
                     {
-                        return Json(new { status = true, StatusMessage = HttpUtility.JavaScriptStringEncode("Good!") });
+                        return Json(new { status = true, StatusMessage = HttpUtility.JavaScriptStringEncode("Good! Your are logined!") });
                     }
                 }
                 else

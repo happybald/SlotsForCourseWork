@@ -10,5 +10,6 @@ namespace SlotsForCourseWork.Models
     {
         public int Credits { get; set; }
         public int BestScore { get; set; }
+        public string RefUserName { get; set; }
     }
 }

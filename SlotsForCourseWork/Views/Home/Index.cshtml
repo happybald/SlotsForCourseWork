@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+
 @{ ViewData["Title"] = "Home Page"; }
 <!-- Modal Trigger -->
 @Html.AntiForgeryToken()
@@ -96,6 +97,13 @@
                     <i class="material-icons prefix">keyboard_arrow_right</i>
                     <input id="ConfirmPasswordR" type="password" class="validate" required>
                     <label for="ConfirmPasswordR">Confirm Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">flash_on</i>
+                    <input id="ReferralUserNamew" type="text" class="validate">
+                    <label for="ReferralUserNamew">Referral UserName (can be empty)</label>
                 </div>
             </div>
             <div class="row">
