@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SlotsForCourseWork.Models;
+using SlotsForCourseWork.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using System.Collections;
+using System.Runtime.ExceptionServices;
+using System.Web;
 
 namespace SlotsForCourseWork.Controllers
 {
@@ -19,11 +26,6 @@ namespace SlotsForCourseWork.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }

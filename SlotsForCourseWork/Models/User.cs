@@ -9,5 +9,6 @@ namespace SlotsForCourseWork.Models
     public class User : IdentityUser
     {
         public int Credits { get; set; }
+        public int BestScore { get; set; }
     }
 }

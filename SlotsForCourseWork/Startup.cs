@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SlotsForCourseWork.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -34,8 +36,7 @@ namespace SlotsForCourseWork
             {
                 opts.Password.RequireNonAlphanumeric = false;
                 opts.User.RequireUniqueEmail = true;
-            })
-                .AddEntityFrameworkStores<ApplicationContext>();
+            }).AddEntityFrameworkStores<ApplicationContext>();
 
             services.AddControllersWithViews();
             services.AddControllers();

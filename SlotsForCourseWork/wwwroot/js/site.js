@@ -1,4 +1,5 @@
-﻿$("#save").click(function () {
-    $("#saveScore").modal();
-    $("#saveScore").modal("open");
-});
+﻿$(document).ready(function () {
+    $('.modal').modal();
+    $('ul.tabs').tabs();
+    console.log("loaded");
+  });

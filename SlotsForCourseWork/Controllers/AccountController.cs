@@ -9,6 +9,7 @@ using System.Linq;
 using System.Collections;
 using System.Runtime.ExceptionServices;
 using System;
+using Microsoft.AspNetCore.Authentication;
 using System.Web;
 using System.Collections.Generic;
 
@@ -41,7 +42,7 @@ namespace CustomIdentityApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.UserName, Credits = 20 };
+                User user = new User { Email = model.Email, UserName = model.UserName, Credits = 20, BestScore=0 };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
