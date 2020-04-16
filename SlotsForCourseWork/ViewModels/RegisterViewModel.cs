@@ -13,6 +13,7 @@ namespace SlotsForCourseWork.ViewModels
         public string UserName { get; set; }
 
         [Required]
+        [DataType(DataType.EmailAddress)]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

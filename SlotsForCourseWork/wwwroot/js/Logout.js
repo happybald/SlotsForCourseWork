@@ -18,8 +18,7 @@ function sendAjaxLogout(url) {
             var resStr = JSON.stringify(response);
             console.log(resStr);
             if (resStr.localeCompare("Good")) {
-                console.log("true");
-                location.reload();
+                    location.reload();
             }
         },
         error: function (response) { // Данные не отправлены

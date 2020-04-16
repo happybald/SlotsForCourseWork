@@ -330,6 +330,18 @@ a:hover {
 .tabs {
     background-color: #000;
 }
+nav {
+    background-color: #4e1921;
+}
+    nav a:hover {
+        color: rgba(177, 177, 177, 0.87)
+    }
+.nav-wrapper{
+    text-align:left;
+}
+    .nav-wrapper .brand-logo:hover {
+        color: #c37061;
+    }
 .container {
     width: 100%;
 }

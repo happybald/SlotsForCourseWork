@@ -4,30 +4,35 @@
 @{ ViewData["Title"] = "Home Page"; }
 <!-- Modal Trigger -->
 @Html.AntiForgeryToken()
-<br />
-<div class="logbar">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        var user = await this.UserManager.GetUserAsync(User);
-    <div class="chip">
-        <img src="~/images/user.png" alt="@user.UserName">
-        @user.UserName
-    </div>
-                    <a class="waves-effect waves-red btn-flat" id="logoutbtn">
-            <i class="material-icons tiny " style="font-size:1rem ">person</i>  Logout
-        </a>
-    }
-    else
-    {
-        <a class="waves-effect waves-red btn-flat modal-trigger" href="#modal1">
-            <i class="material-icons tiny " style="font-size:1rem ">person</i>  Login
-        </a>
-        <a class="waves-effect waves-red btn-flat modal-trigger" href="">
-            <i class="material-icons tiny" style="font-size:1rem">person_add</i> Register
-        </a>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            var user = await this.UserManager.GetUserAsync(User);
+            <span class="nav-title left" style="padding:0; padding-left:10px">Hello @user.UserName !</span>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="" id="logoutbtn">Logout</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="#" id="logoutbtn">Logout</a></li>
+            </ul>
+        }
+        else
+        {
+            <span class="nav-title left" style="padding:0; padding-left:10px">Hello!</span>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#modal1" class="modal-trigger">Login</a></li>
+                <li><a href="#modal2" class="modal-trigger">Register</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="#modal1" class="modal-trigger">Login</a></li>
+                <li><a href="#modal2" class="modal-trigger">Register</a></li>
+            </ul>
         }
     </div>
-        <!-- Modal Structure -->
+</nav>
+<!-- Login Modal-->
 <div id="modal1" class="modal">
     <div class="modal-content">
         <h2>Login</h2>
@@ -64,9 +69,52 @@
         <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Close</a>
     </div>
 </div>
+<!--Register Modal-->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <h2>Register User</h2>
+        <form id="#registerForm" class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input id="UserNameR" type="text" class="validate" required maxlength="16">
+                    <label for="UserNameR" data-error="Wrong UserName">UserName</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">email</i>
+                    <input id="EmailR" type="email" class="validate" required>
+                    <label for="EmailR" data-error="Wrong Email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">keyboard_arrow_right</i>
+                    <input id="PasswordR" type="password" class="validate" required>
+                    <label for="PasswordR" data-error="Wrong Password">Password</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">keyboard_arrow_right</i>
+                    <input id="ConfirmPasswordR" type="password" class="validate" required>
+                    <label for="ConfirmPasswordR">Confirm Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <input type="button" class="btn" id="registerbtn" value="Register" />
+                </div>
+                <div class="col s6 offset-s6">
+                    <div id="result_RegisterForm"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Close</a>
+    </div>
+</div>
 <div class="row">
     <div class="col s12">
-        <ul class="tabs tabs-fixed-width">
+        <ul class="tabs">
             <li class="tab col s3"><a class="active" href="#main">Play</a></li>
             <li class="tab col s3"><a href="#options">Options</a></li>
             <li class="tab col s3"><a href="#bestScores" id="bScoresButton">Best Scores</a></li>
@@ -156,7 +204,7 @@
 </div>
 
 <div id="bestScores" class="scores">
-    <table id="TableBS" class="centered">
+    <table id="TableBS" class="responsive-table">
         <thead>
             <tr>
                 <th>#</th>
@@ -186,4 +234,5 @@
     <script src="~/js/BestUsersList.js" asp-append-version="true"></script>
     <script src="~/js/Logout.js" asp-append-version="true"></script>
     <script src="~/js/Login.js" asp-append-version="true"></script>
+    <script src="~/js/Register.js" asp-append-version="true"></script>
 }

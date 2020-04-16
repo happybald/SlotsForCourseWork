@@ -49,17 +49,19 @@ namespace CustomIdentityApp.Controllers
                 {
                     // установка куки
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
+                    return Json(new { status = true, StatusMessage = HttpUtility.JavaScriptStringEncode("Good!") });
                 }
                 else
                 {
+                    List<string> resmessage = new List<string>();
                     foreach (var error in result.Errors)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        resmessage.Add(error.Code);
                     }
+                    return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode(string.Join(",", resmessage.ToArray()),false) });
                 }
             }
-            return View(model);
+            return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Error! Bad Model!") });
         }
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
@@ -84,15 +86,15 @@ namespace CustomIdentityApp.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return Json(new { status = true, StatusMessage = HttpUtility.JavaScriptStringEncode("Good!") });
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Incorrect login or pass!") });
                 }
             }
-            return View(model);
+            return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Fill all fields!") });
         }
 
         [HttpPost]
