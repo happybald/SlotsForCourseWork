@@ -123,10 +123,19 @@
 <div class="row">
     <div class="col s12">
         <ul class="tabs">
-            <li class="tab col s3"><a class="active" href="#main">Play</a></li>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                var user = await this.UserManager.GetUserAsync(User);
+                <li class="tab col s3"><a class="active" href="#main">Play</a></li>
+            }
+            else
+            {
+                <li class="tab col s3"><a class="active" href="#main">Play Demo</a></li>
+
+            }
             <li class="tab col s3"><a href="#options">Options</a></li>
             <li class="tab col s3"><a href="#bestScores" id="bScoresButton">Best Scores</a></li>
-            <li class="tab col s3"><a href="#lastSpins" id="btnClassement">Last spins</a></li>
+            <li class="tab col s3"><a href="#lastSpins" id="lTransactButton">Last spins</a></li>
         </ul>
     </div>
 </div>
@@ -200,13 +209,15 @@
             <img class="slot full slot2" src="~/images/1.png">
             <img class="slot full slot3" src="~/images/2.png">
             <img class="slot full slot4" src="~/images/3.png">
+            <br />
+            <div class="progress col s6 center" id="loading" style="width:100%">
+                <div class="indeterminate"></div>
+            </div>
         </div>
+    </div>
+        <button id="control" class="but btn blue">Spin</button>
 
     </div>
-    <button id="control" class="but btn blue">Spin</button>
-    <button id="save" class="but btn blue" data-target="saveScore">Save</button>
-
-</div>
 <div id="options">
     <span class="labels">Volume</span> <br>
     <i class="material-icons dp48" id="change">volume_up</i><input style="width: 75%;" type="range" onchange="setVolume(); " id='vol' min=0 max=1 step=0.01 value='1'>
@@ -227,16 +238,17 @@
     </table>
 
 </div>
-<div id="lastSpins">
-    <table class="">
+<div id="lastSpins" style="height:600px">
+    <table id="TableTL" style="text-align:left" class="mdl-data-table">
         <thead>
             <tr>
-                <th></th>
-                <th>#</th>
-                <th>Score</th>
+                <th>Date</th>
+                <th>UserName</th>
+                <th>Bet</th>
+                <th>Result</th>
             </tr>
         </thead>
-        <tbody id="value2">
+        <tbody id="transactList">
         </tbody>
     </table>
 </div>
@@ -246,5 +258,5 @@
     <script src="~/js/Login.js" asp-append-version="true"></script>
     <script src="~/js/Register.js" asp-append-version="true"></script>
     <script src="~/js/SpinSlot.js" asp-append-version="true"></script>
-
-}
+    <script src="~/js/TransactionList.js" asp-append-version="true"></script>
+            }

@@ -141,19 +141,5 @@ namespace CustomIdentityApp.Controllers
 
         }
 
-        public IEnumerable Get()
-        {
-            var users = this._context.Users.OrderByDescending(u => u.Credits).Take(10).ToList<User>();
-            List<UsersNormalizedForJSON> usersNormalized = new List<UsersNormalizedForJSON>();
-            for (int i = 0; i < users.Count; i++)
-            {
-                usersNormalized.Add(new UsersNormalizedForJSON(users[i]));
-            }
-            if (users.Count <= 0)
-            {
-                return "Error!";
-            }
-            return usersNormalized;
-        }
     }
 }

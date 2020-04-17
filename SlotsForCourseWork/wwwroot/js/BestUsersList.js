@@ -10,7 +10,7 @@
                     var rows = "<tr>" +
                         "<td id='n'>" + ++i + "</td>" +
                         "<td id='UserName'>" + item.userName + "</td>" +
-                        "<td id='Credits'>" + item.credits + "</td>" +
+                        "<td id='Credits'>" + item.bestScore + "</td>" +
                         "</tr>";
                     $('#TableBS').append(rows);
                 }); //End of foreach Loop   

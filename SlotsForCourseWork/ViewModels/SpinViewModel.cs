@@ -10,5 +10,9 @@ namespace SlotsForCourseWork.ViewModels
     {
         [Required]
         public int Bet { get; set; }
+
+        public int Credits { get; set; }
+        public int BestScore { get; set; }
+
     }
 }

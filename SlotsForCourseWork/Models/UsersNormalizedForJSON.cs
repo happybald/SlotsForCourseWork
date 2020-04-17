@@ -9,13 +9,13 @@ namespace SlotsForCourseWork.Models
     public class UsersNormalizedForJSON
     {
         public string Id { get; set; }
-        public int Credits { get; set; }
+        public int BestScore { get; set; }
         public string UserName { get; set; }
 
         public UsersNormalizedForJSON(User p)
         {
             Id = p.Id;
-            Credits = p.Credits;
+            BestScore = p.BestScore;
             UserName = p.UserName;
         }
     }

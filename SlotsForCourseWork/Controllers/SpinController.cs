@@ -50,8 +50,9 @@ namespace SlotsForCourseWork.Controllers
                             case 0:
                                 {
                                     this._context.Update(user);
+                                    this._context.Transactions.Add(new Transaction { UserName = user.UserName, Bet=model.Bet, Result = -model.Bet, Time=DateTime.Now });
                                     await this._context.SaveChangesAsync();
-                                    return Json(new { Win = false, a = randomResult[0], b = randomResult[1], c = randomResult[2], d = randomResult[3],NewCredits = user.Credits });
+                                    return Json(new { Win = false, a = randomResult[0], b = randomResult[1], c = randomResult[2], d = randomResult[3], NewCredits = user.Credits });
                                 }
                             case 1:
                                 {
@@ -66,8 +67,9 @@ namespace SlotsForCourseWork.Controllers
                                         ReferralReward(winbet, user.RefUserName);
                                     }
                                     this._context.Update(user);
+                                    this._context.Transactions.Add(new Transaction { UserName = user.UserName, Bet = model.Bet, Result = winbet, Time = DateTime.Now });
                                     await this._context.SaveChangesAsync();
-                                    return Json(new { Win = true, a = randomResult[0], b = randomResult[1], c = randomResult[2], d = randomResult[3], NewCredits = user.Credits, NewBestScore=user.BestScore, WinValue=winbet });
+                                    return Json(new { Win = true, a = randomResult[0], b = randomResult[1], c = randomResult[2], d = randomResult[3], NewCredits = user.Credits, NewBestScore = user.BestScore, WinValue = winbet });
                                 }
                             case 2:
                                 {
@@ -81,6 +83,7 @@ namespace SlotsForCourseWork.Controllers
                                         ReferralReward(winbet, user.RefUserName);
                                     }
                                     this._context.Update(user);
+                                    this._context.Transactions.Add(new Transaction { UserName = user.UserName, Bet = model.Bet, Result = winbet, Time = DateTime.Now });
                                     await this._context.SaveChangesAsync();
                                     return Json(new { Win = true, a = randomResult[0], b = randomResult[1], c = randomResult[2], d = randomResult[3], NewCredits = user.Credits, NewBestScore = user.BestScore, WinValue = winbet });
                                 }
@@ -89,7 +92,40 @@ namespace SlotsForCourseWork.Controllers
                     return Json(new { status = "bad", statusMessage = HttpUtility.JavaScriptStringEncode("You need more credits for this bet!", false) });
 
                 }
-                return Json(new { status = "bad", statusMessage = HttpUtility.JavaScriptStringEncode("Bad Model", false) });
+                else
+                {
+                    model.Credits -= model.Bet;
+                    Random random = new Random();
+                    int[] randomResult = new int[] { random.Next(0, 4), random.Next(0, 4), random.Next(0, 4), random.Next(0, 4) };
+                    int[] counts = new int[] { CountCards(randomResult, 0), CountCards(randomResult, 1), CountCards(randomResult, 2), CountCards(randomResult, 3) };
+                    int win = WinCheck(counts);
+                    switch (win)
+                    {
+                        case 0:
+                            {
+                                return Json(new { Win = false, a = randomResult[0], b = randomResult[1], c = randomResult[2], d = randomResult[3], NewCredits = model.Credits });
+                            }
+                        case 1:
+                            {
+                                int winbet = (int)Math.Pow(3, 2) * (model.Bet - 1) + 3;
+                                model.Credits += winbet;
+                                if (winbet > model.BestScore)
+                                {
+                                    model.BestScore = winbet;
+                                }
+                                return Json(new { Win = true, a = randomResult[0], b = randomResult[1], c = randomResult[2], d = randomResult[3], NewCredits = model.Credits, NewBestScore = model.BestScore, WinValue = winbet });
+                            }
+                        case 2:
+                            {
+                                int winbet = (int)Math.Pow(5, 2) * (model.Bet - 1) + 5;
+                                model.Credits += winbet;
+                                {
+                                    model.BestScore = winbet;
+                                }
+                                return Json(new { Win = true, a = randomResult[0], b = randomResult[1], c = randomResult[2], d = randomResult[3], NewCredits = model.Credits, NewBestScore = model.BestScore, WinValue = winbet });
+                            }
+                    }
+                }
             }
             return Json(new { status = "bad", statusMessage = HttpUtility.JavaScriptStringEncode("Bad Model", false) });
         }
