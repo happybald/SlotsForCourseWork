@@ -5,6 +5,12 @@
             return false;
         }
     );
+    $("#logoutbtn1").click(
+        function () {
+            sendAjaxLogout('/Account/Logout');
+            return false;
+        }
+    );
 });
 
 function sendAjaxLogout(url) {
@@ -16,6 +22,7 @@ function sendAjaxLogout(url) {
         },
         success: function (response) { //Данные отправлены 
             var resStr = JSON.stringify(response);
+            console.log(resStr);
             if (resStr.localeCompare("Good")) {
                     location.reload();
             }

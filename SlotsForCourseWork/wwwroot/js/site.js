@@ -7,14 +7,13 @@
 });
 
 var bet = $('input[name="bet"]');
-console.log(bet.val());
 
 bet.keyup(function () {
     const regex = /\d/g;
     if (regex.exec(bet.val()) != null) {
         load();
         if (parseInt($("#chip").html()) >= parseInt(bet.val())) {
-            ctrl.removeClass("disabled");
+            $('#control').removeClass("disabled");
         }
     }
 });

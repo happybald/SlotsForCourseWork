@@ -22,9 +22,7 @@ namespace CustomIdentityApp.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        [TempData]
-        public string StatusMessage { get; set; }
-
+      
         public AccountController(ApplicationContext db, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _context = db;
@@ -47,10 +45,16 @@ namespace CustomIdentityApp.Controllers
                 { 
                     return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Referral user incorrect!", false) });
                 }
-                var refuser = this._context.Users.FirstOrDefault(u => u.UserName == model.RefUserName);
-                if(refuser == null)
+                if (model.RefUserName != null)
                 {
-                    return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Referral user does not exist!", false) });
+                    var refuser = this._context.Users.FirstOrDefault(u => u.UserName == model.RefUserName);
+                    if (refuser == null)
+                    {
+                        return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Referral user does not exist!", false) });
+                    }
+                    refuser.Credits += 200;
+                    this._context.Update(refuser);
+                    await this._context.SaveChangesAsync();
                 }
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
