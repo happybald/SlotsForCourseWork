@@ -140,5 +140,6 @@ C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\bin\Deb
 C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\obj\Debug\netcoreapp3.1\SlotsForCourseWork.csproj.CoreCompileInputs.cache
 C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork\obj\Debug\netcoreapp3.1\SlotsForCourseWork.MvcApplicationPartsAssemblyInfo.cache

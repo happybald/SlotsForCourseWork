@@ -4,6 +4,9 @@
             $('#control').addClass("disabled");
             $('#bet').attr("disabled", "disabled");
             $('li').addClass("disabled");
+            pauseWin();
+            pauseLose();
+            playSpin();
             $("#loading").show();
             timeForRun = 200;
             timeForFinal = timeForRun;
@@ -50,7 +53,7 @@ function finalrun(a, b, c, d) {
 
 function sendAjaxSpin(url) {
     var Result = {
-        Credits:""+$('#chip').text()+"",
+        Credits: "" + $('#chip').text() + "",
         Bet: "" + $('#bet').val() + "",
         BestScore: "" + $('#highScore').text() + ""
     }
@@ -63,16 +66,19 @@ function sendAjaxSpin(url) {
         data: Result,
         success: function (response) {
             setTimeout(function () {
+                pauseSpin();
                 counter = true;
                 console.log(JSON.stringify(response));
-                setTimeout(finalrun,210,response.a, response.b, response.c, response.d);
+                setTimeout(finalrun, 210, response.a, response.b, response.c, response.d);
                 setTimeout(function () { $("#loading").hide(); }, 230);
                 $('#chip').html(response.newCredits);
                 if (response.win) {
+                    setTimeout(function () { playWin() }, 230);
                     $('#highScore').html(response.newBestScore);
                     Materialize.toast("Nice, you win " + response.winValue + " credits", 4000, 'green');
                 } else {
-                    Materialize.toast("Unfortunately you lost " + $('#bet').val() + " credits", 4000,'red');
+                    setTimeout(function () { playLose() }, 230);
+                    Materialize.toast("Unfortunately you lost " + $('#bet').val() + " credits", 4000, 'red');
                 }
                 $('#control').removeClass("disabled");
                 $('#bet').removeAttr("disabled");
@@ -84,4 +90,34 @@ function sendAjaxSpin(url) {
             Materialize.toast('Error!', 4000) // 4000 is the duration of the toast
         }
     });
-};
+}
+    var spin = document.getElementById("spin");
+    var lose = document.getElementById("lose");
+    var win = document.getElementById("win");
+
+    function playSpin() {
+        spin.play();
+    }
+
+    function pauseSpin() {
+        spin.pause();
+        spin.currentTime = 0;
+    }
+
+    function playLose() {
+        lose.play();
+    }
+
+    function pauseLose() {
+        lose.pause();
+        lose.currentTime = 0;
+    }
+
+    function playWin() {
+        win.play();
+    }
+
+    function pauseWin() {
+        win.pause();
+        win.currentTime = 0;
+    }
