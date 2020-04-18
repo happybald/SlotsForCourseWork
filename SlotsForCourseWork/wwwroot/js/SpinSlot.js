@@ -1,6 +1,22 @@
 ﻿$(document).ready(function () {
     $("#control").click(
         function () {
+            if (parseInt($("#chip").text()) < parseInt(bet.val())) {
+                Materialize.toast("You do not have so many credits!", 4000, 'red');
+                $('#control').addClass("disabled");
+                setTimeout(function () {
+                    $('#control').removeClass("disabled");
+                }, 4000);
+                return;
+            }
+            if (parseInt(bet.val())== 0) {
+                Materialize.toast("You cant spin 0!", 4000, 'red');
+                $('#control').addClass("disabled");
+                setTimeout(function () {
+                    $('#control').removeClass("disabled");
+                }, 4000);
+                return;
+            }
             $('#control').addClass("disabled");
             $('#bet').attr("disabled", "disabled");
             $('li').addClass("disabled");

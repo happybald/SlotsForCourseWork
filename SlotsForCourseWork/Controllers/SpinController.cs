@@ -37,7 +37,7 @@ namespace SlotsForCourseWork.Controllers
             {
                 if (_signInManager.IsSignedIn(HttpContext.User))
                 {
-                    if (_userManager.GetUserAsync(HttpContext.User).Result.Credits > model.Bet)
+                    if (_userManager.GetUserAsync(HttpContext.User).Result.Credits >= model.Bet)
                     {
                         var user = await this._context.Users.FirstOrDefaultAsync(u => u.Id == _userManager.GetUserAsync(HttpContext.User).Result.Id);
                         user.Credits -= model.Bet;

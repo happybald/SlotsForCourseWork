@@ -29,8 +29,9 @@ namespace SlotsForCourseWork
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // Use SQL Database if in Azure, otherwise, use SQLite
+                services.AddDbContext<ApplicationContext>(options =>
+                        options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
 
             services.AddIdentity<User, IdentityRole>(opts =>
             {
@@ -45,7 +46,6 @@ namespace SlotsForCourseWork
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
-
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();

@@ -10,11 +10,11 @@ namespace SlotsForCourseWork.Models
 {
     public class ApplicationContext : IdentityDbContext<User>
     {
-        public DbSet<Transaction> Transactions { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
             Database.EnsureCreated();
         }
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }

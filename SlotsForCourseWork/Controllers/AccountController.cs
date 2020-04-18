@@ -40,7 +40,7 @@ namespace CustomIdentityApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.UserName, Credits = 20, BestScore=0, RefUserName=model.RefUserName};
+                User user = new User { Email = model.Email, UserName = model.UserName, Credits = 40, BestScore=0, RefUserName=model.RefUserName};
                 if(user.UserName == user.RefUserName)
                 { 
                     return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Referral user incorrect!", false) });
