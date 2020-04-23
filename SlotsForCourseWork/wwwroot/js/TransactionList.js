@@ -5,8 +5,6 @@
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-            console.log(data);
-            console.log(JSON.stringify(data));
             $('#transactList').empty();
             $.each(data, function (i, item) {
                 var rows = "<tr>" +

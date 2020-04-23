@@ -9,6 +9,24 @@
 
 var bet = $('input[name="bet"]');
 
+function setVolume() {
+    var media0 = document.getElementById("spin");
+    var media1 = document.getElementById("win");
+    var media2 = document.getElementById("lose");
+    media0.volume = document.getElementById("vol").value;
+    media1.volume = document.getElementById("vol").value;
+    media2.volume = document.getElementById("vol").value;
+    if (media0.volume < 1) {
+        $("#change").html("volume_down");
+    }
+    if (media0.volume == 0) {
+        $("#change").html("volume_off");
+    }
+    if (media0.volume == 1) {
+        $("#change").html("volume_up");
+    }
+}
+
 bet.keyup(function () {
     const regex = /\d/g;
     if (regex.exec(bet.val()) != null) {
@@ -21,8 +39,8 @@ bet.keyup(function () {
 });
 
 function load() {
-    $("#all").html(calcCredit(bet.val(), 5));
-    $("#doublePair").html(calcCredit(bet.val(), 3));
+    $("#all").html(calcCredit(bet.val(), 4));
+    $("#doublePair").html(calcCredit(bet.val(), 2));
     $("#onePair").html(calcCredit(bet.val(), 1));
 }
 

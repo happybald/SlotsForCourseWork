@@ -49,7 +49,7 @@ namespace SlotsForCourseWork.Services
             }
             else
             {
-                return new ResultDTO { win = false, winValue = win, a = result.a, b = result.b, c = result.c, d = result.d,newCredits=model.Credits-win };
+                return new ResultDTO { win = false, winValue = win, a = result.a, b = result.b, c = result.c, d = result.d,newCredits=model.Credits+win };
             }
         }
 
@@ -78,13 +78,16 @@ namespace SlotsForCourseWork.Services
                 {
                     user.BestScore = win;
                     this._context.Update(user);
+                    await this._context.SaveChangesAsync();
                     return new ResultDTO{ win = true, winValue = win, a = result.a, b = result.b, c = result.c, d = result.d, newBestScore = win,newCredits=user.Credits};
                 }
                 this._context.Update(user);
+                await this._context.SaveChangesAsync();
                 return new ResultDTO { win = true, winValue = win, a = result.a, b = result.b, c = result.c, d = result.d,newCredits=user.Credits};
             }
             else
             {
+                await this._context.SaveChangesAsync();
                 return new ResultDTO{ win = false, winValue = win, a = result.a, b = result.b, c = result.c, d = result.d,newCredits=user.Credits};
             }
         }
@@ -109,12 +112,12 @@ namespace SlotsForCourseWork.Services
             {
                 case 1:
                     {
-                        win = model.Bet * 4;
+                        win = (int)Math.Pow(4, 2) * (model.Bet - 1) + 4;
                         break;
                     }
                 case 2:
                     {
-                        win = model.Bet * 2;
+                        win = (int)Math.Pow(2, 2) * (model.Bet - 1) + 2;
                         break;
                     }
                 default:

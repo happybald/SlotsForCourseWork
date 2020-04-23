@@ -2,7 +2,7 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-@{ ViewData["Title"] = "Casino"; }
+@{ ViewData["Title"] = "Index"; }
 <!-- Modal Trigger -->
 @Html.AntiForgeryToken()
 <nav>
@@ -11,28 +11,85 @@
         @if (SignInManager.IsSignedIn(User))
         {
             var user = await this.UserManager.GetUserAsync(User);
-            <span class="nav-title left" style="padding:0; padding-left:10px">Hello @user.UserName !</span>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="" id="logoutbtn">Logout</a></li>
-            </ul>
-            <ul class="side-nav" id="mobile-demo">
-                <li><a href="" id="logoutbtn1">Logout</a></li>
-            </ul>
+        <span class="nav-title left" style="padding:0; padding-left:10px">Hello @user.UserName !</span>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a class="modal-trigger" href="#modal3">My Profile</a></li>
+            <li><a href="" id="logoutbtn">Logout</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li><a class="modal-trigger" href="#modal3">My Profile</a></li>
+            <li><a href="" id="logoutbtn1">Logout</a></li>
+        </ul>
         }
         else
         {
-            <span class="nav-title left" style="padding:0; padding-left:10px">Hello!</span>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#modal1" class="modal-trigger">Login</a></li>
-                <li><a href="#modal2" class="modal-trigger">Register</a></li>
-            </ul>
-            <ul class="side-nav" id="mobile-demo">
-                <li><a href="#modal1" class="modal-trigger">Login</a></li>
-                <li><a href="#modal2" class="modal-trigger">Register</a></li>
-            </ul>
+        <span class="nav-title left" style="padding:0; padding-left:10px">Hello!</span>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="#modal1" class="modal-trigger">Login</a></li>
+            <li><a href="#modal2" class="modal-trigger">Register</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li><a href="#modal1" class="modal-trigger">Login</a></li>
+            <li><a href="#modal2" class="modal-trigger">Register</a></li>
+        </ul>
         }
     </div>
 </nav>
+<!--Profile modal-->
+@if (SignInManager.IsSignedIn(User))
+{
+var user = await this.UserManager.GetUserAsync(User);
+<div id="modal3" class="modal profile">
+    <div class="modal-content">
+        <h2>My Profile</h2>
+        <div class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input disabled value="@user.UserName" id="UserNameP" type="text" class="validate" style="color:black">
+                    <label for="UserNameP">UserName</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">email</i>
+                    <input disabled value="@user.Email" id="EmailP" type="text" class="validate"  style="color:black">
+                    <label for="EmailP">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                @if (user.RefUserName == null)
+                {
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">redo</i>
+                        <input disabled value="Null" id="RefUserNameP" type="text" class="validate" style="color:black">
+                        <label for="RefUserNameP">RefUserName</label>
+                    </div>
+                }
+                else
+                {
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">redo</i>
+                    <input disabled value="@user.RefUserName" id="RefUserNameP" type="text" class="validate" style="color:black">
+                    <label for="RefUserNameP">RefUserName</label>
+                </div>
+                }
+                <div class="input-field col s3">
+                    <i class="material-icons prefix">attach_money</i>
+                    <input disabled value="@user.Credits" id="CreditsP" type="text" class="validate" style="color:black">
+                    <label for="CreditsP">Credits</label>
+                </div>
+                <div class="input-field col s3">
+                    <i class="material-icons prefix">stars</i>
+                    <input disabled value="@user.BestScore" id="BestScoreP" type="text" class="validate" style="color:black">
+                    <label for="BestScoreP">BestScore</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Close</a>
+    </div>
+</div>
+}
 <!-- Login Modal-->
 <div id="modal1" class="modal">
     <div class="modal-content">
@@ -126,11 +183,11 @@
             @if (SignInManager.IsSignedIn(User))
             {
                 var user = await this.UserManager.GetUserAsync(User);
-                <li class="tab col s3"><a class="active" href="#main">Play</a></li>
+            <li class="tab col s3"><a class="active" href="#main">Play</a></li>
             }
             else
             {
-                <li class="tab col s3"><a class="active" href="#main">Play Demo</a></li>
+            <li class="tab col s3"><a class="active" href="#main">Play Demo</a></li>
 
             }
             <li class="tab col s3"><a href="#options">Options</a></li>
@@ -148,15 +205,15 @@
                 @if (SignInManager.IsSignedIn(User))
                 {
                     var user = await this.UserManager.GetUserAsync(User);
-                    <span id="chip" class="chip" value>
-                        @user.Credits
-                    </span>
+                <span id="chip" class="chip" value>
+                    @user.Credits
+                </span>
                 }
                 else
                 {
-                    <span id="chip" class="chip" value>
-                        100
-                    </span>
+                <span id="chip" class="chip" value>
+                    100
+                </span>
                 }
             </h2> <br>
             <h2>
@@ -164,15 +221,15 @@
                 @if (SignInManager.IsSignedIn(User))
                 {
                     var user = await this.UserManager.GetUserAsync(User);
-                    <span id="highScore" class="chip" value>
-                        @user.BestScore
-                    </span>
+                <span id="highScore" class="chip" value>
+                    @user.BestScore
+                </span>
                 }
                 else
                 {
-                    <span id="highScore" class="chip" value>
-                        0
-                    </span>
+                <span id="highScore" class="chip" value>
+                    0
+                </span>
                 }
             </h2> <br>
             <h2>Gains</h2>
@@ -215,9 +272,9 @@
             </div>
         </div>
     </div>
-        <button id="control" class="but btn blue">Spin</button>
+    <button id="control" class="but btn blue">Spin</button>
 
-    </div>
+</div>
 <div id="options">
     <span class="labels">Volume</span> <br>
     <i class="material-icons dp48" id="change">volume_up</i><input style="width: 75%;" type="range" onchange="setVolume(); " id='vol' min=0 max=1 step=0.01 value='1'>
@@ -259,4 +316,4 @@
     <script src="~/js/Register.js" asp-append-version="true"></script>
     <script src="~/js/SpinSlot.js" asp-append-version="true"></script>
     <script src="~/js/TransactionList.js" asp-append-version="true"></script>
-            }
+}
