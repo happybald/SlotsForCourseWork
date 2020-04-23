@@ -35,21 +35,20 @@ namespace SlotsForCourseWork.Services
 
         public async Task<ResultDTO> StartGuest(SpinViewModel model)
         {
-            SpinDTO result;
-            int win;
-                result = this.Spin();
-                win = this.ToWin(result, model);
+            SpinDTO result = this.Spin();
+            int win = this.ToWin(result, model);
             if (win > 0)
             {
                 if (win > model.BestScore)
                 {
-                    return new ResultDTO { win = true, winValue = win, a = result.a, b = result.b, c = result.c, d = result.d, newBestScore = win,newCredits=model.Credits+win };
+                    model.BestScore = win;
+                    return new ResultDTO(result, win, model);
                 }
-                return new ResultDTO { win = true, winValue = win, a = result.a, b = result.b, c = result.c, d = result.d ,newCredits=model.Credits+win};
+                return new ResultDTO(result, win, model);
             }
             else
             {
-                return new ResultDTO { win = false, winValue = win, a = result.a, b = result.b, c = result.c, d = result.d,newCredits=model.Credits+win };
+                return new ResultDTO(result, win, model);
             }
         }
 
@@ -58,13 +57,9 @@ namespace SlotsForCourseWork.Services
         {
             user.Credits -= model.Bet;
             this._context.CasinoInfo.FirstOrDefault(c => c.id == 1).CasinoCash += model.Bet;
-            SpinDTO result;
-            int win;
-            do
-            {
-                result = this.Spin();
-                win = this.ToWin(result, model);
-            } while (this._context.CasinoInfo.FirstOrDefault(c => c.id == 1).CasinoCash - win < Constants.CASINO_MONEY);
+            SpinDTO result = new SpinDTO();
+            int win = new int();
+            SpinCycle(ref win,ref result,ref  model);
             await this._transactionService.AddTransactionAsync(user.UserName, model.Bet, win);
             if (win > 0)
             {
@@ -79,16 +74,16 @@ namespace SlotsForCourseWork.Services
                     user.BestScore = win;
                     this._context.Update(user);
                     await this._context.SaveChangesAsync();
-                    return new ResultDTO{ win = true, winValue = win, a = result.a, b = result.b, c = result.c, d = result.d, newBestScore = win,newCredits=user.Credits};
+                    return new ResultDTO(result, win, user);
                 }
                 this._context.Update(user);
                 await this._context.SaveChangesAsync();
-                return new ResultDTO { win = true, winValue = win, a = result.a, b = result.b, c = result.c, d = result.d,newCredits=user.Credits};
+                return new ResultDTO(result, win, user);
             }
             else
             {
                 await this._context.SaveChangesAsync();
-                return new ResultDTO{ win = false, winValue = win, a = result.a, b = result.b, c = result.c, d = result.d,newCredits=user.Credits};
+                return new ResultDTO(result, win, user);
             }
         }
 
@@ -128,6 +123,7 @@ namespace SlotsForCourseWork.Services
             }
             return win;
         }
+
         private int WinCheck(SpinDTO spin)
         {
             int a = 0, b = 0, c = 0, d = 0;
@@ -160,6 +156,15 @@ namespace SlotsForCourseWork.Services
                 return 2;
             }
             return 0;
+        }
+
+        private void SpinCycle(ref int win, ref SpinDTO result, ref SpinViewModel model)
+        {
+            do
+            {
+                result = this.Spin();
+                win = this.ToWin(result, model);
+            } while (this._context.CasinoInfo.FirstOrDefault(c => c.id == 1).CasinoCash - win < Constants.CASINO_MONEY);
         }
 
         private void ReferralReward(int value, string RefUserNameStr)
