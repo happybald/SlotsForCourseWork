@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SlotsForCourseWork.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using BedeSlots.Services.Data;
 
 namespace SlotsForCourseWork
 {
@@ -33,6 +32,7 @@ namespace SlotsForCourseWork
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ITransactionService, TransactionService>();
+            services.AddTransient<ISpinService, SpinService>();
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             services.AddDbContext<ApplicationContext>(options =>

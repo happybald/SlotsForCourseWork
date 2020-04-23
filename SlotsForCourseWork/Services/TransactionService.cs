@@ -5,9 +5,10 @@ using SlotsForCourseWork.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Collections;
 using System.Threading.Tasks;
 
-namespace BedeSlots.Services.Data
+namespace SlotsForCourseWork.Services
 {
     public class TransactionService : ITransactionService
     {
@@ -21,15 +22,23 @@ namespace BedeSlots.Services.Data
         public IQueryable<TransactionDTO> GetAllTransactions()
         {
             var transactions = this.context.Transactions
+                .Select(t => new
+                {
+                    t.Time,
+                    t.UserName,
+                    t.Bet,
+                    t.Result,
+                })
+                .OrderByDescending(t => t.Time)
+                .Take(20)
+                .AsQueryable()
                 .Select(t => new TransactionDTO
                 {
+                    UserName=t.UserName,
+                    Bet=t.Bet,
                     Time = t.Time.ToString("MM/dd/yyyy HH:mm"),
-                    UserName = t.UserName,
-                    Bet = t.Bet,
-                    Result= t.Result,
-                })
-                .AsQueryable();
-
+                    Result=t.Result
+                });
             return transactions;
         }
 

@@ -118,28 +118,5 @@ namespace CustomIdentityApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Withdraw(WithdrawModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var user = await this._context.Users.FirstOrDefaultAsync(u => u.Id == _userManager.GetUserAsync(HttpContext.User).Result.Id);
-                    user.Credits += (int)model.Value;
-                    this._context.Update(user);
-                    await this._context.SaveChangesAsync();
-                    return Json(new { Message = HttpUtility.JavaScriptStringEncode("Successfully! Your new balance :" + user.Credits, false), NewCredits = user.Credits});
-                }
-                catch (Exception ex)
-                {
-                    return Json(new string(ex.Message));
-
-                }
-            }
-                return Json(new string("Model is not valid!"));
-
-        }
-
     }
 }

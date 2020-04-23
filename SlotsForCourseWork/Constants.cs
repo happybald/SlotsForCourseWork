@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SlotsForCourseWork.Models
+namespace SlotsForCourseWork
 {
-    public class WithdrawModel
+    public class Constants
     {
-        public double Value { get; set; }
+        public const int CASINO_MONEY = 400;
     }
 }

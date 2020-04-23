@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using SlotsForCourseWork.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
@@ -27,17 +28,16 @@ namespace SlotsForCourseWork.Controllers
         [HttpGet]
         public IEnumerable Get()
         {
-            var users = this._context.Users.OrderByDescending(u => u.BestScore).Take(10).ToList<User>();
-            List<UsersNormalizedForJSON> usersNormalized = new List<UsersNormalizedForJSON>();
-            for (int i = 0; i < users.Count; i++)
-            {
-                usersNormalized.Add(new UsersNormalizedForJSON(users[i]));
-            }
-            if (users.Count <= 0)
-            {
-                return "Error!";
-            }
-            return usersNormalized;
+            var bestUsers = this._context.Users
+                .Select(t => new UserDTO
+                {
+                    UserName = t.UserName,
+                    BestScore = t.BestScore
+                })
+                .OrderByDescending(t => t.BestScore)
+                .Take(10)
+                .ToList();
+            return bestUsers;
         }
     }
 }

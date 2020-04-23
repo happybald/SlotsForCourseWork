@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using SlotsForCourseWork.Services.Contracts;
 using SlotsForCourseWork.Models;
-using BedeSlots.Services.Data;
 
 namespace SlotsForCourseWork.Controllers
 {
@@ -31,7 +30,7 @@ namespace SlotsForCourseWork.Controllers
         [HttpGet]
         public IEnumerable Get()
         {
-            var transactions = _transactionService.GetAllTransactions().Take(20).ToList();
+            var transactions = _transactionService.GetAllTransactions();
             return transactions;
         }
     }
