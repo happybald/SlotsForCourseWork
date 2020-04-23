@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SlotsForCourseWork.DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
+using SlotsForCourseWork.Services.Contracts;
 using SlotsForCourseWork.Models;
+using BedeSlots.Services.Data;
 
 namespace SlotsForCourseWork.Controllers
 {
@@ -16,41 +19,20 @@ namespace SlotsForCourseWork.Controllers
     [ApiController]
     public class TransactionAPIController : ControllerBase
     {
+        private readonly ITransactionService _transactionService;
         private readonly ApplicationContext _context;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
     
-        public TransactionAPIController(ApplicationContext db, UserManager<User> userManager, SignInManager<User> signInManager)
+        public TransactionAPIController(ApplicationContext db, ITransactionService transactionService)
         {
             _context = db;
-            _userManager = userManager;
-            _signInManager = signInManager;
-        }
-
-        struct TrNormalized
-        {
-            public string DateTime { get; set; }
-            public string UserName { get; set; }
-            public int Bet { get; set; }
-            public int Win { get; set; }
-
+            _transactionService = transactionService;
         }
 
         [HttpGet]
         public IEnumerable Get()
         {
-                var transactions = this._context.Transactions.OrderByDescending(u => u.Time).Take(20).ToList<Transaction>();
-                var transactListNormalized = new List<TrNormalized>();
-                for (int i = 0; i < transactions.Count; i++)
-                {
-                    transactListNormalized.Add(new TrNormalized { DateTime = transactions[i].Time.ToString("dd/M/yyyy HH:mm:ss"), UserName = transactions[i].UserName, Bet = transactions[i].Bet, Win = transactions[i].Result });
-                }
-                if (transactions.Count <= 0)
-                {
-                    return "Error!";
-                }
-                return transactListNormalized;
-
+            var transactions = _transactionService.GetAllTransactions().Take(20).ToList();
+            return transactions;
         }
     }
 }

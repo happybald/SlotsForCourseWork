@@ -4,20 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace SlotsForCourseWork.Models
+namespace SlotsForCourseWork.DTO
 {
-    public class Transaction
+    public class TransactionDTO
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
         public string UserName { get; set; }
-        [Required]
-        [DataType(DataType.DateTime)]
-        public DateTime Time { get; set; }
-        [Required]
+        public string Time { get; set; }
         public int Bet { get; set; }
-        [Required]
         public int Result { get; set; }
     }
 }

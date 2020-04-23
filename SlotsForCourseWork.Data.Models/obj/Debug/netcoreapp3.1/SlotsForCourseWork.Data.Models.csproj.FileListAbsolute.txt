@@ -1,0 +1,9 @@
+C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork.Data.Models\bin\Debug\netcoreapp3.1\SlotsForCourseWork.Data.Models.deps.json
+C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork.Data.Models\bin\Debug\netcoreapp3.1\SlotsForCourseWork.Data.Models.dll
+C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork.Data.Models\obj\Debug\netcoreapp3.1\SlotsForCourseWork.Data.Models.csprojAssemblyReference.cache
+C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork.Data.Models\obj\Debug\netcoreapp3.1\SlotsForCourseWork.Data.Models.AssemblyInfoInputs.cache
+C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork.Data.Models\obj\Debug\netcoreapp3.1\SlotsForCourseWork.Data.Models.AssemblyInfo.cs
+C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork.Data.Models\bin\Debug\netcoreapp3.1\SlotsForCourseWork.Data.Models.pdb
+C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork.Data.Models\obj\Debug\netcoreapp3.1\SlotsForCourseWork.Data.Models.csproj.CoreCompileInputs.cache
+C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork.Data.Models\obj\Debug\netcoreapp3.1\SlotsForCourseWork.Data.Models.dll
+C:\Users\Балтид\source\repos\SlotsForCourseWork\SlotsForCourseWork.Data.Models\obj\Debug\netcoreapp3.1\SlotsForCourseWork.Data.Models.pdb

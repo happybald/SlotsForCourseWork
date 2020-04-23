@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using SlotsForCourseWork.Models;
+using SlotsForCourseWork.Services;
+using SlotsForCourseWork.Services.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,6 +17,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SlotsForCourseWork.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using BedeSlots.Services.Data;
 
 namespace SlotsForCourseWork
 {
@@ -29,8 +32,10 @@ namespace SlotsForCourseWork
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ITransactionService, TransactionService>();
+
             // Use SQL Database if in Azure, otherwise, use SQLite
-                services.AddDbContext<ApplicationContext>(options =>
+            services.AddDbContext<ApplicationContext>(options =>
                         options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
 
             services.AddIdentity<User, IdentityRole>(opts =>
@@ -62,5 +67,8 @@ namespace SlotsForCourseWork
                             pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        
+
     }
 }

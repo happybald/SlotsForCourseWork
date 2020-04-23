@@ -1,0 +1,74 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Балтид\\source\\repos\\SlotsForCourseWork\\SlotsForCourseWork.Data.Models\\SlotsForCourseWork.Data.Models.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Балтид\\source\\repos\\SlotsForCourseWork\\SlotsForCourseWork.Data.Models\\SlotsForCourseWork.Data.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Балтид\\source\\repos\\SlotsForCourseWork\\SlotsForCourseWork.Data.Models\\SlotsForCourseWork.Data.Models.csproj",
+        "projectName": "SlotsForCourseWork.Data.Models",
+        "projectPath": "C:\\Users\\Балтид\\source\\repos\\SlotsForCourseWork\\SlotsForCourseWork.Data.Models\\SlotsForCourseWork.Data.Models.csproj",
+        "packagesPath": "C:\\Users\\Балтид\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Балтид\\source\\repos\\SlotsForCourseWork\\SlotsForCourseWork.Data.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Балтид\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
