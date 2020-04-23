@@ -13,7 +13,7 @@ namespace SlotsForCourseWork.Models
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+
         }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Casino> CasinoInfo { get; set; }

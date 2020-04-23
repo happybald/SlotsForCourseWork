@@ -13,4 +13,9 @@
       <Value>Server=tcp:slotsforcourseworkdbserver.database.windows.net,1433%3bInitial Catalog=SlotsForCourseWork_db%3bUser Id=happybald%40slotsforcourseworkdbserver%3bPassword=Danil2001s</Value>
     </DestinationConnectionStrings>
   </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="SlotsForCourseWork.Models.ApplicationContext">
+      <Value>Data Source=tcp:slotsforcourseworkdbserver.database.windows.net,1433%3bInitial Catalog=SlotsForCourseWork_db%3bUser Id=happybald%40slotsforcourseworkdbserver%3bPassword=Danil2001s</Value>
+    </EFMigrations>
+  </ItemGroup>
 </Project>

@@ -10,10 +10,10 @@
             $('#transactList').empty();
             $.each(data, function (i, item) {
                 var rows = "<tr>" +
-                    "<td id='Date'>" + item.dateTime + "</td>" +
+                    "<td id='Date'>" + item.time + "</td>" +
                     "<td id='UserName'>" + item.userName + "</td>" +
                     "<td id='Bet'>" + item.bet + "</td>" +
-                    "<td id='Result'>" + item.win + "</td>" +
+                    "<td id='Result'>" + item.result + "</td>" +
                     "</tr>";
                 $('#TableTL').append(rows);
             }); //End of foreach Loop   
