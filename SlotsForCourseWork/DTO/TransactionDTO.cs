@@ -5,14 +5,23 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System;
 using System.ComponentModel.DataAnnotations;
+using SlotsForCourseWork.Models;
 
 namespace SlotsForCourseWork.DTO
 {
     public class TransactionDTO
     {
-        public string UserName { get; set; }
-        public string Time { get; set; }
-        public int Bet { get; set; }
-        public int Result { get; set; }
+        public string UserName { get; }
+        public string Time { get; }
+        public int Bet { get; }
+        public int Result { get; }
+        
+        public TransactionDTO (string userName, string time, int bet,int result)
+        {
+            UserName = userName;
+            Time = time;
+            Bet = bet;
+            Result = result;
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace SlotsForCourseWork.Services.Contracts
 {
     public interface ISpinService
     {
-        Task<ResultDTO> StartUser(SpinViewModel model, User user);
-        Task<ResultDTO> StartGuest(SpinViewModel model);
+        ResultDTO StartUser(SpinViewModel model, User user);
+        ResultDTO StartGuest(SpinViewModel model);
     }
 }

@@ -12,6 +12,6 @@ namespace SlotsForCourseWork.Services.Contracts
 
         IQueryable<TransactionDTO> GetUserTransactionsAsync(string id);
 
-        Task<Transaction> AddTransactionAsync(string userName, int bet, int result);
+        Transaction AddTransaction(string userName, int bet, int result);
     }
 }

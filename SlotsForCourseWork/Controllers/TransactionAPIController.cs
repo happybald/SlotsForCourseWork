@@ -19,11 +19,9 @@ namespace SlotsForCourseWork.Controllers
     public class TransactionAPIController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
-        private readonly ApplicationContext _context;
     
-        public TransactionAPIController(ApplicationContext db, ITransactionService transactionService)
+        public TransactionAPIController(ITransactionService transactionService)
         {
-            _context = db;
             _transactionService = transactionService;
         }
 

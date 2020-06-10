@@ -21,28 +21,13 @@ namespace SlotsForCourseWork.Services
 
         public IQueryable<TransactionDTO> GetAllTransactions()
         {
-            var transactions = this.context.Transactions
-                .Select(t => new
-                {
-                    t.Time,
-                    t.UserName,
-                    t.Bet,
-                    t.Result,
-                })
+            return context.Transactions
                 .OrderByDescending(t => t.Time)
                 .Take(20)
-                .AsQueryable()
-                .Select(t => new TransactionDTO
-                {
-                    UserName=t.UserName,
-                    Bet=t.Bet,
-                    Time = t.Time.ToString("MM/dd/yyyy HH:mm"),
-                    Result=t.Result
-                });
-            return transactions;
+                .Select(t => new TransactionDTO(t.UserName, t.Time.ToString("MM/dd/yyyy HH:mm"), t.Bet, t.Result));
         }
 
-        public async Task<Transaction> AddTransactionAsync(string userName, int bet, int result)
+        public Transaction AddTransaction(string userName, int bet, int result)
         {
             if (userName == null)
             {
@@ -62,26 +47,16 @@ namespace SlotsForCourseWork.Services
                 Result = result
             };
 
-            await this.context.Transactions.AddAsync(transaction);
-            await this.context.SaveChangesAsync();
-
+            context.Transactions.AddAsync(transaction);
+            context.SaveChangesAsync();
             return transaction;
         }
 
         public IQueryable<TransactionDTO> GetUserTransactionsAsync(string userName)
         {
-            var transactions = this.context.Transactions
+            return context.Transactions
                .Where(t => t.UserName == userName)
-               .Select(t => new TransactionDTO
-               {
-                   Time = t.Time.ToString("MM/dd/yyyy HH:mm"),
-                   UserName = t.UserName,
-                   Bet = t.Bet,
-                   Result = t.Result,
-               })
-               .AsQueryable();
-
-            return transactions;
+               .Select(t => new TransactionDTO(t.UserName, t.Time.ToString("MM/dd/yyyy HH:mm"), t.Bet, t.Result));
         }
     }
 }

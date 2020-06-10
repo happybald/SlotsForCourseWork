@@ -42,25 +42,34 @@ namespace SlotsForCourseWork.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.Credits< model.Bet)
+                if (model.Credits < model.Bet)
                 {
-                    return Json(new { status = "bad", statusMessage = HttpUtility.JavaScriptStringEncode("You need more credits for this bet!", false) });
+                    return Json(new
+                    {
+                        status = false,
+                        statusMessage = HttpUtility.JavaScriptStringEncode("You need more credits for this bet!", false)
+                    });
                 }
                 if (_signInManager.IsSignedIn(HttpContext.User))
                 {
-                    if (this._userManager.GetUserAsync(User).Result.Credits < model.Bet)
+                    if (_userManager.GetUserAsync(User).Result.Credits < model.Bet)
                     {
-                        return Json(new { status = "bad", statusMessage = HttpUtility.JavaScriptStringEncode("You need more credits for this bet!", false) });
+                        return Json(new
+                        {
+                            status = false,
+                            statusMessage = HttpUtility.JavaScriptStringEncode("You need more credits for this bet!", false)
+                        });
                     }
-                    var user = await this._userManager.GetUserAsync(User);
-                    return Json(await this._spinService.StartUser(model, user));
+                    var user = await _userManager.GetUserAsync(User);
+                    return Json(_spinService.StartUser(model, user));
                 }
-                else
-                {
-                    return Json(await this._spinService.StartGuest(model));
-                }
+                return Json(_spinService.StartGuest(model));
             }
-            return Json(new { status = "bad", statusMessage = HttpUtility.JavaScriptStringEncode("Bad Model", false) });
+            return Json(new
+            {
+                status = false,
+                statusMessage = HttpUtility.JavaScriptStringEncode("Bad Model", false)
+            });
         }
     }
 }

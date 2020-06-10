@@ -22,7 +22,7 @@ namespace CustomIdentityApp.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-      
+
         public AccountController(ApplicationContext db, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _context = db;
@@ -30,31 +30,41 @@ namespace CustomIdentityApp.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.UserName, Credits = 40, BestScore=0, RefUserName=model.RefUserName};
-                if(user.UserName == user.RefUserName)
-                { 
-                    return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Referral user incorrect!", false) });
+                User user = new User
+                {
+                    Email = model.Email,
+                    UserName = model.UserName,
+                    Credits = 40,
+                    BestScore = 0,
+                    RefUserName = model.RefUserName
+                };
+                if (user.UserName == user.RefUserName)
+                {
+                    return Json(new
+                    {
+                        status = false,
+                        statusMessage = HttpUtility.JavaScriptStringEncode("Referral user incorrect!", false)
+                    });
                 }
                 if (model.RefUserName != null)
                 {
-                    var refuser = this._context.Users.FirstOrDefault(u => u.UserName == model.RefUserName);
+                    var refuser = _context.Users.FirstOrDefault(u => u.UserName == model.RefUserName);
                     if (refuser == null)
                     {
-                        return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Referral user does not exist!", false) });
+                        return Json(new
+                        {
+                            status = false,
+                            statusMessage = HttpUtility.JavaScriptStringEncode("Referral user does not exist!", false)
+                        });
                     }
                     refuser.Credits += 200;
-                    this._context.Update(refuser);
-                    await this._context.SaveChangesAsync();
+                    _context.Update(refuser);
+                    await _context.SaveChangesAsync();
                 }
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -62,7 +72,11 @@ namespace CustomIdentityApp.Controllers
                 {
                     // установка куки
                     await _signInManager.SignInAsync(user, false);
-                    return Json(new { status = true, StatusMessage = HttpUtility.JavaScriptStringEncode("Good!") });
+                    return Json(new
+                    {
+                        status = true,
+                        statusMessage = HttpUtility.JavaScriptStringEncode("Good!")
+                    });
                 }
                 else
                 {
@@ -71,15 +85,18 @@ namespace CustomIdentityApp.Controllers
                     {
                         resmessage.Add(error.Code);
                     }
-                    return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode(string.Join(",", resmessage.ToArray()),false) });
+                    return Json(new
+                    {
+                        status = false,
+                        statusMessage = HttpUtility.JavaScriptStringEncode(string.Join(",", resmessage.ToArray()), false)
+                    });
                 }
             }
-            return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Error! Bad Model!") });
-        }
-        [HttpGet]
-        public IActionResult Login(string returnUrl = null)
-        {
-            return View(new LoginViewModel { ReturnUrl = returnUrl });
+            return Json(new
+            {
+                status = false,
+                statusMessage = HttpUtility.JavaScriptStringEncode("Error! Bad Model!")
+            });
         }
 
         [HttpPost]
@@ -98,15 +115,27 @@ namespace CustomIdentityApp.Controllers
                     }
                     else
                     {
-                        return Json(new { status = true, StatusMessage = HttpUtility.JavaScriptStringEncode("Good! Your are logined!") });
+                        return Json(new
+                        {
+                            status = true,
+                            statusMessage = HttpUtility.JavaScriptStringEncode("Good! Your are logined!")
+                        });
                     }
                 }
                 else
                 {
-                    return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Incorrect login or pass!") });
+                    return Json(new
+                    {
+                        status = false,
+                        statusMessage = HttpUtility.JavaScriptStringEncode("Incorrect login or pass!")
+                    });
                 }
             }
-            return Json(new { status = false, StatusMessage = HttpUtility.JavaScriptStringEncode("Fill all fields!") });
+            return Json(new
+            {
+                status = false,
+                statusMessage = HttpUtility.JavaScriptStringEncode("Fill all fields!")
+            });
         }
 
         [HttpPost]

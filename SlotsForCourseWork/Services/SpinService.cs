@@ -20,114 +20,93 @@ namespace SlotsForCourseWork.Services
     public class SpinService : ISpinService
     {
         private readonly ApplicationContext _context;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly ITransactionService _transactionService;
 
-        public SpinService(ApplicationContext context, UserManager<User> userManager, SignInManager<User> signInManager, ITransactionService transactionService)
+        public SpinService(ApplicationContext context, ITransactionService transactionService)
         {
-            this._transactionService = transactionService ?? throw new ServiceException(nameof(transactionService));
-            this._context = context ?? throw new ServiceException(nameof(context));
-            this._signInManager = signInManager ?? throw new ServiceException(nameof(signInManager));
-            this._userManager = userManager ?? throw new ServiceException(nameof(userManager));
+            _transactionService = transactionService ?? throw new ServiceException(nameof(transactionService));
+            _context = context ?? throw new ServiceException(nameof(context));
         }
 
 
-        public async Task<ResultDTO> StartGuest(SpinViewModel model)
+        public ResultDTO StartGuest(SpinViewModel model)
         {
-            SpinDTO result = this.Spin();
-            int win = this.ToWin(result, model);
+            SpinDTO result = Spin();
+            int win = ToWin(result, model);
             if (win > 0)
             {
                 if (win > model.BestScore)
                 {
                     model.BestScore = win;
-                    return new ResultDTO(result, win, model);
                 }
-                return new ResultDTO(result, win, model);
             }
-            else
-            {
-                return new ResultDTO(result, win, model);
-            }
+            return new ResultDTO(result, win, model);
         }
 
 
-        public async Task<ResultDTO> StartUser(SpinViewModel model, User user)
+        public ResultDTO StartUser(SpinViewModel model, User user)
         {
             user.Credits -= model.Bet;
-            this._context.CasinoInfo.FirstOrDefault(c => c.id == 1).CasinoCash += model.Bet;
-            SpinDTO result = new SpinDTO();
-            int win = new int();
-            SpinCycle(ref win,ref result,ref  model);
-            await this._transactionService.AddTransactionAsync(user.UserName, model.Bet, win);
+            var casinoInfo = _context.CasinoInfo.FirstOrDefault(c => c.Id == Constants.CASINO_ID);
+            casinoInfo.CasinoCash += model.Bet;
+            SpinDTO result;
+            int win;
+            do
+            {
+                result = Spin();
+                win = ToWin(result, model);
+            } while (casinoInfo.CasinoCash - win < Constants.CASINO_MONEYLIM);
+
+            _transactionService.AddTransaction(user.UserName, model.Bet, win);
             if (win > 0)
             {
                 user.Credits += win;
-                this._context.CasinoInfo.FirstOrDefault(c => c.id == 1).CasinoCash -= win;
-                if(user.RefUserName != null)
+                casinoInfo.CasinoCash -= win;
+                if (user.RefUserName != null)
                 {
                     ReferralReward(win, user.RefUserName);
                 }
                 if (win > user.BestScore)
                 {
                     user.BestScore = win;
-                    this._context.Update(user);
-                    await this._context.SaveChangesAsync();
-                    return new ResultDTO(result, win, user);
                 }
-                this._context.Update(user);
-                await this._context.SaveChangesAsync();
-                return new ResultDTO(result, win, user);
             }
-            else
-            {
-                await this._context.SaveChangesAsync();
-                return new ResultDTO(result, win, user);
-            }
+            _context.Update(user);
+            _context.SaveChangesAsync();
+            return new ResultDTO(result, win, user);
         }
 
         private SpinDTO Spin()
         {
             Random rnd = new Random();
-            SpinDTO temp = new SpinDTO();
-            temp.a = rnd.Next(1, 4);
-            temp.b = rnd.Next(1, 4);
-            temp.c = rnd.Next(1, 4);
-            temp.d = rnd.Next(1, 4);
+            SpinDTO temp = new SpinDTO(rnd.Next(1, 4), rnd.Next(1, 4), rnd.Next(1, 4), rnd.Next(1, 4));
             temp.WinType = WinCheck(temp);
-
             return temp;
-
         }
+
         private int ToWin(SpinDTO spin, SpinViewModel model)
         {
-            int win = 0;
             switch (spin.WinType)
             {
                 case 1:
                     {
-                        win = (int)Math.Pow(4, 2) * (model.Bet - 1) + 4;
-                        break;
+                        return (int)Math.Pow(4, 2) * (model.Bet - 1) + 4;
                     }
                 case 2:
                     {
-                        win = (int)Math.Pow(2, 2) * (model.Bet - 1) + 2;
-                        break;
+                        return (int)Math.Pow(2, 2) * (model.Bet - 1) + 2;
                     }
                 default:
                     {
-                        win = -model.Bet;
-                        break;
+                        return -model.Bet;
                     }
             }
-            return win;
         }
 
         private int WinCheck(SpinDTO spin)
         {
             int a = 0, b = 0, c = 0, d = 0;
-            int[] slotsArray = { spin.a, spin.b, spin.c, spin.d };
+            int[] slotsArray = { spin.A, spin.B, spin.C, spin.D };
             for (int i = 0; i < 4; i++)
             {
                 if (slotsArray[i] == 1)
@@ -151,28 +130,20 @@ namespace SlotsForCourseWork.Services
             {
                 return 1;
             }
-            if ((a == 2 && b == 2) || (a == 2 && c == 2) || (a == 2 && d == 2) || (b == 2 && c == 2) || (b == 2 & d == 2) || (c == 2 && d == 2))
+            if ((a == 2 && b == 2) || (a == 2 && c == 2) || (a == 2 && d == 2) ||
+                (b == 2 && c == 2) || (b == 2 && d == 2) || (c == 2 && d == 2))
             {
                 return 2;
             }
             return 0;
         }
 
-        private void SpinCycle(ref int win, ref SpinDTO result, ref SpinViewModel model)
-        {
-            do
-            {
-                result = this.Spin();
-                win = this.ToWin(result, model);
-            } while (this._context.CasinoInfo.FirstOrDefault(c => c.id == 1).CasinoCash - win < Constants.CASINO_MONEY);
-        }
-
         private void ReferralReward(int value, string RefUserNameStr)
         {
-            var refUser = this._context.Users.FirstOrDefault(u => u.UserName == RefUserNameStr);
+            var refUser = _context.Users.FirstOrDefault(u => u.UserName == RefUserNameStr);
             double reward = (Convert.ToDouble(value) / 100) * 5;
             refUser.Credits += (int)reward;
-            this._context.Update(refUser);
+            _context.Update(refUser);
             if (refUser.RefUserName != null)
             {
                 ReferralReward(value, refUser.RefUserName);

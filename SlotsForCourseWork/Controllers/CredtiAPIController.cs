@@ -28,16 +28,11 @@ namespace SlotsForCourseWork.Controllers
         [HttpGet]
         public IEnumerable Get()
         {
-            var bestUsers = this._context.Users
-                .Select(t => new UserDTO
-                {
-                    UserName = t.UserName,
-                    BestScore = t.BestScore
-                })
+            return _context.Users
                 .OrderByDescending(t => t.BestScore)
                 .Take(10)
+                .Select(t => new UserDTO(t.UserName, t.BestScore))
                 .ToList();
-            return bestUsers;
         }
     }
 }

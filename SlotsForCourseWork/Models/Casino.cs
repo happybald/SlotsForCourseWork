@@ -7,7 +7,7 @@ namespace SlotsForCourseWork.Models
 {
     public class Casino
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public int CasinoCash { get; set; }
     }
 }

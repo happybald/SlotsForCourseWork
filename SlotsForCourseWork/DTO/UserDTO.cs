@@ -8,7 +8,13 @@ namespace SlotsForCourseWork.DTO
 {
     public class UserDTO
     {
-        public string UserName { get; set; }
-        public int BestScore { get; set; }
+        public string UserName { get; }
+        public int BestScore { get; }
+
+        public UserDTO(string userName, int bestScore)
+        {
+            UserName = userName;
+            BestScore = bestScore;
+        }
     }
 }

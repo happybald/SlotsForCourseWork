@@ -28,7 +28,6 @@ function sendAjaxLogin(url) {
         RememberMe: "" + rememberbool + "",
         ReturnUrl: "null",
     }
-    console.log($("[name='__RequestVerificationToken']").val());
     $.ajax({
         url: url, //url страницы 
         type: "POST", //метод отправки
