@@ -12,19 +12,19 @@ namespace SlotsForCourseWork.Services
 {
     public class TransactionService : ITransactionService
     {
-        private readonly ApplicationContext context;
+        private readonly ApplicationContext _context;
 
         public TransactionService(ApplicationContext context)
         {
-            this.context = context ?? throw new ServiceException(nameof(context));
+            this._context = context ?? throw new ServiceException(nameof(context));
         }
 
-        public IQueryable<TransactionDTO> GetAllTransactions()
+        public IQueryable<TransactionDto> GetAllTransactions()
         {
-            return context.Transactions
+            return _context.Transactions
                 .OrderByDescending(t => t.Time)
                 .Take(20)
-                .Select(t => new TransactionDTO(t.UserName, t.Time.ToString("MM/dd/yyyy HH:mm"), t.Bet, t.Result));
+                .Select(t => new TransactionDto(t.UserName, t.Time.ToString("MM/dd/yyyy HH:mm"), t.Bet, t.Result));
         }
 
         public Transaction AddTransaction(string userName, int bet, int result)
@@ -47,16 +47,16 @@ namespace SlotsForCourseWork.Services
                 Result = result
             };
 
-            context.Transactions.AddAsync(transaction);
-            context.SaveChangesAsync();
+            _context.Transactions.AddAsync(transaction);
+            _context.SaveChangesAsync();
             return transaction;
         }
 
-        public IQueryable<TransactionDTO> GetUserTransactionsAsync(string userName)
+        public IQueryable<TransactionDto> GetUserTransactionsAsync(string userName)
         {
-            return context.Transactions
+            return _context.Transactions
                .Where(t => t.UserName == userName)
-               .Select(t => new TransactionDTO(t.UserName, t.Time.ToString("MM/dd/yyyy HH:mm"), t.Bet, t.Result));
+               .Select(t => new TransactionDto(t.UserName, t.Time.ToString("MM/dd/yyyy HH:mm"), t.Bet, t.Result));
         }
     }
 }

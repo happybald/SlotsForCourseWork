@@ -15,11 +15,11 @@ namespace SlotsForCourseWork.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CredtiAPIController : ControllerBase
+    public class CredtiApiController : ControllerBase
     {
         private readonly ApplicationContext _context;
 
-        public CredtiAPIController(ApplicationContext db)
+        public CredtiApiController(ApplicationContext db)
         {
             _context = db;
         }
@@ -31,7 +31,7 @@ namespace SlotsForCourseWork.Controllers
             return _context.Users
                 .OrderByDescending(t => t.BestScore)
                 .Take(10)
-                .Select(t => new UserDTO(t.UserName, t.BestScore))
+                .Select(t => new UserDto(t.UserName, t.BestScore))
                 .ToList();
         }
     }

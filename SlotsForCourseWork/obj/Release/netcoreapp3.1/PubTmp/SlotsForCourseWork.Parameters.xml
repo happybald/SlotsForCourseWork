@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="IIS Web Application Name" description="" value="SlotsForCourseWork" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Балтид\\source\\repos\\SlotsForCourseWork\\SlotsForCourseWork\\obj\\Release\\netcoreapp3\.1\\PubTmp\\Out\\$" />
-  </parameter>
-  <parameter name="SlotsForCourseWork.Models.ApplicationContext" description="" value="Data Source=tcp:slotsforcourseworkdbserver.database.windows.net,1433;Initial Catalog=SlotsForCourseWork_db;User Id=happybald@slotsforcourseworkdbserver;Password=Danil2001s" tags="dbfullsql">
-    <parameterEntry kind="ProviderPath" scope="dbfullsql" match="^C:\\Users\\Балтид\\source\\repos\\SlotsForCourseWork\\SlotsForCourseWork\\obj\\Release\\netcoreapp3\.1\\PubTmp\\EFSQLScripts\\SlotsForCourseWork\.Models\.ApplicationContext\.sql$" />
-  </parameter>
-</parameters>

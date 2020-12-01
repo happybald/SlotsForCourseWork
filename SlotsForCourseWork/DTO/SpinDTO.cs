@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SlotsForCourseWork.DTO
 {
-    public class SpinDTO
+    public class SpinDto
     {
         public int A { get; }
         public int B { get; }
@@ -14,7 +14,7 @@ namespace SlotsForCourseWork.DTO
         public int D { get; }
         public int WinType { get; set; }
 
-        public SpinDTO(int a, int b, int c, int d)
+        public SpinDto(int a, int b, int c, int d)
         {
             A = a;
             B = b;

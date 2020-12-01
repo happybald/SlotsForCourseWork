@@ -40,36 +40,32 @@ namespace SlotsForCourseWork.Controllers
         [HttpPost]
         public async Task<IActionResult> Start(SpinViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return Json(new
+                {
+                    status = false,
+                    statusMessage = HttpUtility.JavaScriptStringEncode("Bad Model", false)
+                });
+            if (model.Credits < model.Bet)
             {
-                if (model.Credits < model.Bet)
+                return Json(new
                 {
-                    return Json(new
-                    {
-                        status = false,
-                        statusMessage = HttpUtility.JavaScriptStringEncode("You need more credits for this bet!", false)
-                    });
-                }
-                if (_signInManager.IsSignedIn(HttpContext.User))
-                {
-                    if (_userManager.GetUserAsync(User).Result.Credits < model.Bet)
-                    {
-                        return Json(new
-                        {
-                            status = false,
-                            statusMessage = HttpUtility.JavaScriptStringEncode("You need more credits for this bet!", false)
-                        });
-                    }
-                    var user = await _userManager.GetUserAsync(User);
-                    return Json(_spinService.StartUser(model, user));
-                }
-                return Json(_spinService.StartGuest(model));
+                    status = false,
+                    statusMessage = HttpUtility.JavaScriptStringEncode("You need more credits for this bet!", false)
+                });
             }
-            return Json(new
+
+            if (!_signInManager.IsSignedIn(HttpContext.User)) return Json(_spinService.StartGuest(model));
+            if (_userManager.GetUserAsync(User).Result.Credits < model.Bet)
             {
-                status = false,
-                statusMessage = HttpUtility.JavaScriptStringEncode("Bad Model", false)
-            });
+                return Json(new
+                {
+                    status = false,
+                    statusMessage = HttpUtility.JavaScriptStringEncode("You need more credits for this bet!", false)
+                });
+            }
+            var user = await _userManager.GetUserAsync(User);
+            return Json(_spinService.StartUser(model, user));
         }
     }
 }

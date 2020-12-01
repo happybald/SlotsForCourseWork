@@ -9,14 +9,14 @@ using SlotsForCourseWork.Models;
 
 namespace SlotsForCourseWork.DTO
 {
-    public class TransactionDTO
+    public class TransactionDto
     {
         public string UserName { get; }
         public string Time { get; }
         public int Bet { get; }
         public int Result { get; }
         
-        public TransactionDTO (string userName, string time, int bet,int result)
+        public TransactionDto (string userName, string time, int bet,int result)
         {
             UserName = userName;
             Time = time;

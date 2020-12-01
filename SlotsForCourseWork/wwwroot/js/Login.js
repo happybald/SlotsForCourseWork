@@ -3,7 +3,7 @@
         function () {
             $('#result_Loginform').html('');
             $('#loginbtn').addClass("disabled");
-            if ($('#UserNameL').val() == "" || $('#PasswordL').val() == "") {
+            if ($('#UserNameL').val() === "" || $('#PasswordL').val() === "") {
                 setTimeout(function () {
                     $('#loginbtn').removeClass('disabled');
                 }, 8000);

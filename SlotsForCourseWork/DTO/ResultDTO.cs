@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SlotsForCourseWork.DTO
 {
-    public class ResultDTO
+    public class ResultDto
     {
-        public bool Win => WinValue > 0;
+        public bool IsWin => WinValue > 0;
         public int A { get; }
         public int B { get; }
         public int C { get; }
@@ -18,7 +18,7 @@ namespace SlotsForCourseWork.DTO
         public int WinValue { get; }
         public int NewCredits { get; }
 
-        public ResultDTO(SpinDTO spin, int win, User user)
+        public ResultDto(SpinDto spin, int win, User user)
         {
             A = spin.A;
             B = spin.B;
@@ -28,7 +28,7 @@ namespace SlotsForCourseWork.DTO
             NewCredits = user.Credits;
             WinValue = win;
         }
-        public ResultDTO(SpinDTO spin, int win, SpinViewModel model)
+        public ResultDto(SpinDto spin, int win, SpinViewModel model)
         {
             A = spin.A;
             B = spin.B;

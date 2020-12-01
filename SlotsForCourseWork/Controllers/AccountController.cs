@@ -103,39 +103,37 @@ namespace CustomIdentityApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
+            if (!ModelState.IsValid)
+                return Json(new
                 {
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
-                    {
-                        return Json(new
-                        {
-                            status = true,
-                            statusMessage = HttpUtility.JavaScriptStringEncode("Good! Your are logined!")
-                        });
-                    }
+                    status = false,
+                    statusMessage = HttpUtility.JavaScriptStringEncode("Fill all fields!")
+                });
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+            if (result.Succeeded)
+            {
+                // проверяем, принадлежит ли URL приложению
+                if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                {
+                    return Redirect(model.ReturnUrl);
                 }
                 else
                 {
                     return Json(new
                     {
-                        status = false,
-                        statusMessage = HttpUtility.JavaScriptStringEncode("Incorrect login or pass!")
+                        status = true,
+                        statusMessage = HttpUtility.JavaScriptStringEncode("Good! Your are logined!")
                     });
                 }
             }
-            return Json(new
+            else
             {
-                status = false,
-                statusMessage = HttpUtility.JavaScriptStringEncode("Fill all fields!")
-            });
+                return Json(new
+                {
+                    status = false,
+                    statusMessage = HttpUtility.JavaScriptStringEncode("Incorrect login or pass!")
+                });
+            }
         }
 
         [HttpPost]

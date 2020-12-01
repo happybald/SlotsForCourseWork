@@ -16,11 +16,11 @@ namespace SlotsForCourseWork.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TransactionAPIController : ControllerBase
+    public class TransactionApiController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
     
-        public TransactionAPIController(ITransactionService transactionService)
+        public TransactionApiController(ITransactionService transactionService)
         {
             _transactionService = transactionService;
         }

@@ -6,12 +6,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SlotsForCourseWork.DTO
 {
-    public class UserDTO
+    public class UserDto
     {
         public string UserName { get; }
         public int BestScore { get; }
 
-        public UserDTO(string userName, int bestScore)
+        public UserDto(string userName, int bestScore)
         {
             UserName = userName;
             BestScore = bestScore;

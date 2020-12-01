@@ -8,9 +8,9 @@ namespace SlotsForCourseWork.Services.Contracts
 {
     public interface ITransactionService
     {
-        IQueryable<TransactionDTO> GetAllTransactions();
+        IQueryable<TransactionDto> GetAllTransactions();
 
-        IQueryable<TransactionDTO> GetUserTransactionsAsync(string id);
+        IQueryable<TransactionDto> GetUserTransactionsAsync(string id);
 
         Transaction AddTransaction(string userName, int bet, int result);
     }
